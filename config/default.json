@@ -1,0 +1,3 @@
+{
+    "ocrmypdf-options": "--pdf-renderer tesseract --tesseract-timeout 600 --rotate-pages -l deu+eng --deskew --clean --skip-text"
+}
