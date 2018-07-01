@@ -1,22 +1,26 @@
 const chokidar = require('chokidar');
 const exec = require('child_process').exec;
-const config = require('config');
 const fs = require('fs');
-
-const DELAY = 10000; // milliseconds
-
-const watcher = chokidar.watch('watch-folder/', {
-  ignored: /[\/\\]\./, persistent: true
-});
 
 const log = console.log.bind(console);
 const processingFiles = {};
 
+const DELAY = process.env.DELAY | 10000; // milliseconds
+log(`Delay milliseconds is ${DELAY}`);
+
+const OCRMYPDF_OPTIONS = '--pdf-renderer tesseract --tesseract-timeout 600 --rotate-pages -l deu+eng --deskew --clean --skip-text';
+if(process.env.OCRMYPDF_OPTIONS !== undefined) OCRMYPDF_OPTIONS = process.env.OCRMYPDF_OPTIONS;
+log(`OCRmyPDF options: ${OCRMYPDF_OPTIONS}`);
+
+const watcher = chokidar.watch('watch-folder/', {
+  persistent: true
+});
+
 function processFile(path){
   processingFiles[path].state = 'started';
   let exportPath = path.replace(/^watch-folder\//, 'export-folder/');
-  log(exportPath);
-  exec(`ocrmypdf ${config.get('ocrmypdf-options')} ${path} ${exportPath}`,
+  log(`Create output to ${exportPath}`);
+  exec(`ocrmypdf ${OCRMYPDF_OPTIONS} ${path} ${exportPath}`,
         (error, stdout, stderr) => {
             log(`${stdout}`);
             log(`${stderr}`);
@@ -45,7 +49,7 @@ function checkFileProcessing(path){
 }
 
 function processing (path, stats, event){
-  if(path.endsWith('.pdf')){
+  if(path.endsWith('.pdf')||path.endsWith('.PDF')){
     if (stats) 
       log('File', path, event, 'changed size to', stats.size);
     else 
