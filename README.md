@@ -44,4 +44,4 @@ services:
        - /LOCALFOLDER/shares:/mount
      restart: always
      command: '-g "log level = 2" -n -r -S -s "Upload;/mount/hot-folder;yes;no;yes" -s "Download;/mount/archive;yes;no;yes"'
-     ```
+```
