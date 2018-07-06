@@ -18,7 +18,8 @@ Default delay the process waits for file changes is 10000 milliseconds. Using DE
 
 Sample docker compose file combined with samba service to share the volumes as network folder. Replace ```LOCALFOLDER``` with your local path.
 
-```version: '3'
+```
+version: '3'
 services:
   OCRmyPDF:
     image: tobiasw/ocrmypdf-watcher:latest
@@ -42,4 +43,5 @@ services:
      volumes:
        - /LOCALFOLDER/shares:/mount
      restart: always
-     command: '-g "log level = 2" -n -r -S -s "Upload;/mount/hot-folder;yes;no;yes" -s "Download;/mount/archive;yes;no;yes"'```
+     command: '-g "log level = 2" -n -r -S -s "Upload;/mount/hot-folder;yes;no;yes" -s "Download;/mount/archive;yes;no;yes"'
+     ```
