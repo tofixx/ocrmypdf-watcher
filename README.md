@@ -1,6 +1,6 @@
-Run the filewatcher using 
+Run the filewatcher using the following statement replacing `LOCALPATH`:
 
-```docker run -v "/application/watch-folder" -v "/application/export-folder" -it tobiasw/ocrmypdf-watcher```
+```docker run -v "/LOCALPATH/watch-folder:/application/watch-folder" -v "/LOCALPATH/export-folder:/application/export-folder" -it tobiasw/ocrmypdf-watcher```
 
 Files added to watch-folder will be processed after 10 seconds and output to export folder with ocr information added.
 
